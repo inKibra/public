@@ -1,0 +1,41 @@
+{
+  "name": "@inkibra/observable-cache",
+  "version": "5.2.1",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "An observable cache",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build"
+  },
+  "dependencies": {
+    "@inkibra/error-base": "workspace:*",
+    "@types/immutable": "^3.8.7",
+    "@types/lodash.get": "^4.4.6",
+    "@types/uuid": "^9.0.0",
+    "immutable": "^4.2.4",
+    "internal-storage": "^0.1.2",
+    "lodash.get": "^4.4.2",
+    "rxjs": "^6.5.3",
+    "typed-path": "^2.2.1",
+    "typeid-js": "^1.0.0"
+  },
+  "peerDependencies": {
+    "neverthrow": "catalog:"
+  },
+  "devDependencies": {
+    "typia": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  },
+  "gitHead": "ba14c4f87b3f7fefe6a144cf0eee23fc4149c705"
+}

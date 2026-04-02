@@ -1,0 +1,36 @@
+{
+  "name": "@inkibra/ai-sandbox-computer",
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "Sandboxed command computer for AI constructs — preview/commit execution engine, command registry, sys modules",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "test": "bun test",
+    "clean": "rm -rf build"
+  },
+  "dependencies": {
+    "@inkibra/ai-flow": "workspace:*",
+    "@inkibra/test-support": "workspace:*",
+    "openai": "catalog:",
+    "cron-parser": "^4.9.0"
+  },
+  "peerDependencies": {
+    "@inkibra/router": "workspace:*",
+    "neverthrow": "catalog:",
+    "typia": "catalog:"
+  },
+  "devDependencies": {
+    "@inkibra/build-pack": "workspace:*",
+    "@inkibra/router": "workspace:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  }
+}

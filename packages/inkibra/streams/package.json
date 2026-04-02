@@ -1,0 +1,41 @@
+{
+  "name": "@inkibra/streams",
+  "version": "1.0.0",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "Durable ordered stream primitives with Redis-first reads",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./types": "./types.ts",
+    "./client": "./client.ts",
+    "./cursor": "./cursor.ts",
+    "./postgres-mirror": "./postgres-mirror.ts"
+  },
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build",
+    "test": "bun run test:unit",
+    "test:unit": "bun test *.test.ts",
+    "test:integration": "node __tests__/integration/run-streams-integration.mjs"
+  },
+  "dependencies": {
+    "@inkibra/dal-connection": "workspace:*",
+    "@inkibra/logger": "workspace:*",
+    "@inkibra/observable-cache": "workspace:*",
+    "@inkibra/test-support": "workspace:*",
+    "ioredis": "catalog:"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "catalog:",
+    "drizzle-orm": "catalog:",
+    "testcontainers": "^11.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  }
+}

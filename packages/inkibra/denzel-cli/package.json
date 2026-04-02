@@ -1,0 +1,30 @@
+{
+  "name": "@inkibra/denzel-cli",
+  "version": "0.3.1",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "Denzel CLI with interactive site-assets wizard and Cloudflare worker deployment",
+  "license": "SEE LICENSE",
+  "bin": {
+    "inkibra-denzel": "cli.ts"
+  },
+  "scripts": {
+    "cli": "bun ./cli.ts",
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build",
+    "generate:schemas": "bun run ../build-pack/generate-schemas.ts"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "catalog:",
+    "yargs": "catalog:",
+    "@types/yargs": "catalog:",
+    "typia": "catalog:",
+    "@inkibra/build-pack": "workspace:*",
+    "@inkibra/denzel-workers": "workspace:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  }
+}

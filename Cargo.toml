@@ -1,0 +1,8 @@
+[workspace]
+resolver = "2"
+members = [
+
+]
+
+[patch.crates-io]
+wry = { git = "https://github.com/tauri-apps/wry", branch = "feat/ios-bgcolor" }

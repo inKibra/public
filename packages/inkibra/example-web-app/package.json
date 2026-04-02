@@ -1,0 +1,24 @@
+{
+  "name": "@inkibra/example-web-app",
+  "version": "0.0.3",
+  "description": "Example web app demonstrating @inkibra/router and @inkibra/denzel-bun",
+  "main": "start.ts",
+  "scripts": {
+    "dev": "bun --hot dev.ts",
+    "start": "NODE_ENV=production bun start.ts",
+    "check:tsc": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@inkibra/router": "workspace:*",
+    "@inkibra/denzel-bun": "workspace:*",
+    "@inkibra/build-pack": "workspace:*",
+    "@inkibra/logger": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typia": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "@inkibra/mailbox",
+  "version": "1.0.0",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "Durable mailbox semantics on top of streams",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./types": "./types.ts",
+    "./client": "./client.ts",
+    "./adapters": "./adapters.ts",
+    "./memory": "./memory.ts"
+  },
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build",
+    "test": "bun run test:unit",
+    "test:unit": "bun test *.test.ts"
+  },
+  "dependencies": {
+    "@inkibra/streams": "workspace:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  }
+}

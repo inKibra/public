@@ -1,0 +1,226 @@
+# Sync community contributions back to private monorepo via Josh proxy
+# Josh automatically reverse-transforms paths when pushing to a filtered view
+name: Sync to Private Repo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    services:
+      # Run Josh proxy as a service container
+      josh:
+        image: joshproject/josh-proxy:latest
+        ports:
+          - 8000:8000
+        env:
+          # Josh needs credentials to access the private upstream
+          JOSH_REMOTE: "https://github.com"
+        options: >-
+          --health-cmd "wget -q --spider http://localhost:8000/version || exit 1"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+          --health-start-period 10s
+
+    steps:
+      - name: Checkout public repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get commit info
+        id: commit
+        run: |
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+          # Use unique delimiters to prevent injection via crafted git metadata
+          SHORT_SHA="$(git rev-parse --short HEAD)"
+          DELIM_AUTHOR="GHOUTPUT_AUTHOR_${SHORT_SHA}"
+          DELIM_MSG="GHOUTPUT_MSG_${SHORT_SHA}"
+          DELIM_SUBJECT="GHOUTPUT_SUBJECT_${SHORT_SHA}"
+          DELIM_FILES="GHOUTPUT_FILES_${SHORT_SHA}"
+
+          echo "author<<${DELIM_AUTHOR}" >> $GITHUB_OUTPUT
+          git log -1 --pretty=%an >> $GITHUB_OUTPUT
+          echo "${DELIM_AUTHOR}" >> $GITHUB_OUTPUT
+
+          # Commit subject (first line) for PR title
+          echo "message<<${DELIM_SUBJECT}" >> $GITHUB_OUTPUT
+          git log -1 --pretty=%s >> $GITHUB_OUTPUT
+          echo "${DELIM_SUBJECT}" >> $GITHUB_OUTPUT
+
+          # Full message for PR body
+          echo "full_message<<${DELIM_MSG}" >> $GITHUB_OUTPUT
+          git log -1 --pretty=%B >> $GITHUB_OUTPUT
+          echo "${DELIM_MSG}" >> $GITHUB_OUTPUT
+
+          # Changed files
+          echo "files<<${DELIM_FILES}" >> $GITHUB_OUTPUT
+          git diff-tree --no-commit-id --name-only -r HEAD >> $GITHUB_OUTPUT
+          echo "${DELIM_FILES}" >> $GITHUB_OUTPUT
+
+      - name: Wait for Josh proxy
+        run: |
+          set -euo pipefail
+          echo "Waiting for Josh proxy to be ready..."
+          for i in {1..30}; do
+            if curl -sf http://localhost:8000/ > /dev/null 2>&1; then
+              echo "Josh proxy is ready"
+              exit 0
+            fi
+            echo "Attempt $i/30..."
+            sleep 2
+          done
+          echo "::error::Josh proxy failed to start after 60 seconds"
+          exit 1
+
+      - name: Configure Git credentials for Josh
+        env:
+          PRIVATE_REPO_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config --global credential.helper store
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Josh needs credentials to access the private upstream
+          echo "https://x-access-token:${PRIVATE_REPO_TOKEN}@github.com" >> ~/.git-credentials
+          echo "http://x-access-token:${PRIVATE_REPO_TOKEN}@localhost:8000" >> ~/.git-credentials
+
+      - name: Push to private repo through Josh (reverse transform)
+        id: sync
+        env:
+          PRIVATE_REPO_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          GH_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          COMMIT_SHA: ${{ steps.commit.outputs.sha_short }}
+          COMMIT_MSG: ${{ steps.commit.outputs.message }}
+          COMMIT_AUTHOR: ${{ steps.commit.outputs.author }}
+          CHANGED_FILES: ${{ steps.commit.outputs.files }}
+          FULL_MESSAGE: ${{ steps.commit.outputs.full_message }}
+        run: |
+          set -euo pipefail
+          # Josh proxy URL for the PRIVATE repo with workspace filter
+          # When we push TO this URL, Josh REVERSES the filter
+          #
+          # Flow:
+          #   Public commit (packages/inkibra/router/...)
+          #        ↓ push to Josh
+          #   Josh reverses workspace.josh mapping
+          #        ↓
+          #   Private repo receives (packages/inkibra/router/...)
+          #
+          # If workspace.josh had path remapping like:
+          #   packages/router = :/packages/inkibra/router
+          # Then:
+          #   Public: packages/router/...
+          #   Josh reverses to: packages/inkibra/router/...
+          #   Private receives the correct paths
+
+          # Mask token to prevent accidental exposure in logs
+          echo "::add-mask::${PRIVATE_REPO_TOKEN}"
+
+          # Embed credentials in Josh URL so it can authenticate with upstream GitHub
+          # JOSH_REMOTE is set to https://github.com, so the path is relative to that
+          JOSH_URL="http://x-access-token:${PRIVATE_REPO_TOKEN}@localhost:8000/inKibra/core.git:workspace=.josh.git"
+
+          echo "=== Syncing via Josh reverse transform ==="
+          echo "Public commit: ${COMMIT_SHA}"
+          echo "Author: ${COMMIT_AUTHOR}"
+          echo ""
+
+          # Create a branch name for the PR
+          BRANCH_NAME="community/public-${COMMIT_SHA}"
+
+          # Add Josh-filtered private repo as remote
+          # This represents the private repo through Josh's workspace filter
+          git remote add josh-private "$JOSH_URL" || git remote set-url josh-private "$JOSH_URL"
+
+          # Fetch the current state from private repo (through Josh filter)
+          # Track which ref was fetched so the ancestor check uses the right one
+          echo "Fetching private repo state through Josh..."
+          PRIVATE_REF=""
+          if git fetch josh-private develop 2>/dev/null; then
+            PRIVATE_REF="josh-private/develop"
+          elif git fetch josh-private main 2>/dev/null; then
+            PRIVATE_REF="josh-private/main"
+          else
+            echo "::warning::Could not fetch from private repo — this may be the first sync"
+            # Without a private ref we cannot verify this isn't a publish-originated commit.
+            # Skip sync to avoid creating spurious "community contribution" PRs.
+            echo "skipped=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Check if this commit already came from the private repo (publish-sync)
+          # If our HEAD is an ancestor of the private filtered history, there's
+          # nothing new to sync back — this push was from the publish workflow
+          if git merge-base --is-ancestor HEAD "$PRIVATE_REF" 2>/dev/null; then
+            echo "Public HEAD is already in private repo — skipping sync (this was a publish push)"
+            echo "skipped=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Push our commits to Josh, which reverse-transforms to private
+          # We push to a new branch to create a PR (not directly to develop)
+          echo ""
+          echo "Pushing to private repo through Josh..."
+          echo "Josh will reverse-transform paths according to workspace.josh"
+          echo ""
+
+          # Push current HEAD to a new branch on private repo
+          git push -o base=develop josh-private "HEAD:refs/heads/${BRANCH_NAME}"
+
+          echo ""
+          echo "✅ Pushed to private repo branch: ${BRANCH_NAME}"
+
+          # Now create a PR in the private repo
+          echo ""
+          echo "=== Creating PR in private repo ==="
+
+          {
+            echo "## Community Contribution from Public Repo"
+            echo ""
+            echo "This PR syncs a community contribution from the public OSS repo."
+            echo ""
+            echo "**Original commit:** inkibra/public@${COMMIT_SHA}"
+            echo "**Original author:** ${COMMIT_AUTHOR}"
+            echo ""
+            echo "### Changed files"
+            echo "${CHANGED_FILES}"
+            echo ""
+            echo "### Original commit message"
+            echo "${FULL_MESSAGE}"
+          } > /tmp/pr-body.md
+
+          if ! gh pr create \
+            --repo inKibra/core \
+            --base develop \
+            --head "${BRANCH_NAME}" \
+            --title "🌍 Community: ${COMMIT_MSG}" \
+            --body-file /tmp/pr-body.md; then
+            echo "::error::Failed to create PR in private repo"
+            exit 1
+          fi
+
+          echo ""
+          echo "✅ PR created successfully"
+
+      - name: Summary
+        env:
+          COMMIT_SHA: ${{ steps.commit.outputs.sha_short }}
+          COMMIT_AUTHOR: ${{ steps.commit.outputs.author }}
+          SKIPPED: ${{ steps.sync.outputs.skipped }}
+        run: |
+          echo "## Sync Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "$SKIPPED" = "true" ]; then
+            echo "⏭️ **Skipped** — commit already exists in private repo (publish push)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ Synced community contribution to private repo via Josh" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Commit:** ${COMMIT_SHA}" >> $GITHUB_STEP_SUMMARY
+            echo "**Author:** ${COMMIT_AUTHOR}" >> $GITHUB_STEP_SUMMARY
+          fi

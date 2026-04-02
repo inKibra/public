@@ -1,0 +1,16 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": []
+      }
+    }
+  },
+  "affected": {
+    "defaultBase": "origin/develop"
+  },
+  "cli": {
+    "packageManager": "bun"
+  }
+}

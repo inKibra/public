@@ -1,0 +1,47 @@
+{
+  "name": "@inkibra/storybook",
+  "version": "0.2.0",
+  "type": "module",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "AST-based storybook discovery and testing utilities",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "SEE LICENSE",
+  "exports": {
+    ".": "./index.ts",
+    "./types": "./types.ts",
+    "./plugin": "./plugin.ts",
+    "./config": "./config.ts",
+    "./testing": "./testing/index.ts",
+    "./server": "./server/index.ts",
+    "./runtime": "./runtime/index.ts"
+  },
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "test:self": "bun __tests__/self-test.ts",
+    "storybook:build": "bun server/build.ts",
+    "storybook:serve": "bun server/serve.ts"
+  },
+  "dependencies": {
+    "agentation": "^2.2.1",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "@types/react": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@types/bun": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@playwright/test": "catalog:",
+    "esbuild": "catalog:",
+    "@vanilla-extract/esbuild-plugin": "^2.3.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "html": {
+    "linter": {
+      "enabled": false
+    },
+    "formatter": {
+      "enabled": false
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    },
+    "linter": {
+      "enabled": true
+    }
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "includes": [
+      "**/*.ts",
+      "**/*.tsx"
+    ]
+  },
+  "json": {
+    "formatter": {
+      "enabled": false
+    }
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "develop"
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "nursery": {
+        "noImportCycles": "on",
+        "noFloatingPromises": "on"
+      },
+      "suspicious": {
+        "noConfusingVoidType": "off",
+        "noArrayIndexKey": "off",
+        "noShadowRestrictedNames": "off",
+        "useAwait": "off",
+        "useIterableCallbackReturn": "warn"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "warn",
+        "useJsxKeyInIterable": "off",
+        "noUndeclaredDependencies": "off",
+        "noPrivateImports": "on",
+        "useHookAtTopLevel": "warn"
+      },
+      "complexity": {
+        "noForEach": "off",
+        "noStaticOnlyClass": "off",
+        "noBannedTypes": "warn",
+        "noUselessTernary": "off"
+      },
+      "style": {
+        "noParameterAssign": "off",
+        "useImportType": "error",
+        "useNumberNamespace": "off",
+        "useShorthandFunctionType": "off",
+        "useNodejsImportProtocol": "off",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error",
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {
+              "typia": "limit the use of typia"
+            }
+          }
+        }
+      },
+      "a11y": {
+        "noSvgWithoutTitle": "warn",
+        "useKeyWithClickEvents": "off",
+        "noAutofocus": "off",
+        "useButtonType": "warn",
+        "useAltText": "warn",
+        "useMediaCaption": "off",
+        "useHtmlLang": "warn",
+        "noLabelWithoutControl": "warn",
+        "noStaticElementInteractions": "off",
+        "useFocusableInteractive": "warn",
+        "useAriaPropsSupportedByRole": "warn",
+        "useSemanticElements": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      }
+    }
+  },
+  "files": {
+    "includes": [
+      "**",
+      "!**/labs",
+      "!**/build",
+      "!**/dist",
+      "!**/.wrangler",
+      "!**/target",
+      "!**/.venv",
+      "!**/assets",
+      "!**/storage",
+      "!**/.parcel-cache",
+      "!**/.eslintrc.js",
+      "!**/.eslintrc.cjs",
+      "!**/*.json-template.ts",
+      "!**/*.json",
+      "!**/*.ts-template.ts",
+      "!**/*.js-template.ts",
+      "!**/schema.js",
+      "!**/*.schema.js",
+      "!**/schemas.js",
+      "!**/*.schemas.js",
+      "!**/cx.mjs",
+      "!packages/inkibra/tauri-plugin-example-app/example-update/app.js",
+      "!packages/inkibra/recordless.music-engine/index.js",
+      "!packages/inkibra/recordless.music-engine/index.d.ts",
+      "!**/.public"
+    ]
+  }
+}

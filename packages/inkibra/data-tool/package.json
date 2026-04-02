@@ -1,0 +1,28 @@
+{
+  "name": "@inkibra/data-tool",
+  "version": "2.3.13",
+  "engines": {
+    "node": "v18.13.0"
+  },
+  "description": "Tools for managing dal data in development",
+  "license": "SEE LICENSE",
+  "bin": {
+    "inkibra-data-tool": "cli.ts"
+  },
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build"
+  },
+  "dependencies": {
+    "@inkibra/dal-connection": "workspace:*",
+    "@inkibra/environment": "workspace:*",
+    "@inkibra/logger": "workspace:*",
+    "@types/yargs": "^15.0.4",
+    "yargs": "^15.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  },
+  "gitHead": "ba14c4f87b3f7fefe6a144cf0eee23fc4149c705"
+}

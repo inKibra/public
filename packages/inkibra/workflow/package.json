@@ -1,0 +1,52 @@
+{
+  "name": "@inkibra/workflow",
+  "version": "2.1.0",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "Typesafe, explicit, resumable workflow system for long-running processes",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./types": "./types.ts",
+    "./runtime": "./runtime.ts",
+    "./system": "./system.ts",
+    "./queue": "./queue.ts",
+    "./concurrency": "./concurrency.ts",
+    "./scheduler": "./scheduler.ts",
+    "./storage-dal": "./storage-dal.ts",
+    "./events": "./events.ts",
+    "./worker-bullmq": "./worker-bullmq.ts",
+    "./registry": "./registry.ts",
+    "./effect-handler": "./effect-handler.ts"
+  },
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build",
+    "test": "bun run test:unit",
+    "test:unit": "bun test *.test.ts",
+    "test:integration": "node __tests__/integration/run-dragonfly-integration.mjs"
+  },
+  "dependencies": {
+    "@inkibra/dal-connection": "workspace:*",
+    "@inkibra/error-base": "workspace:*",
+    "@inkibra/logger": "workspace:*",
+    "@inkibra/observable-cache": "workspace:*",
+    "@inkibra/test-support": "workspace:*",
+    "bullmq": "^5.52.2",
+    "ioredis": "catalog:"
+  },
+  "peerDependencies": {
+    "neverthrow": "catalog:"
+  },
+  "devDependencies": {
+    "testcontainers": "^11.11.0",
+    "uuid": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  }
+}

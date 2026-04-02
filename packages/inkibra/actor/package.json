@@ -1,0 +1,37 @@
+{
+  "name": "@inkibra/actor",
+  "version": "1.0.0",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "Mailbox-backed durable actor runtime primitives",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./types": "./types.ts",
+    "./runtime": "./runtime.ts",
+    "./memory": "./memory.ts",
+    "./redis": "./redis.ts"
+  },
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build",
+    "test": "bun run test:unit",
+    "test:unit": "bun test *.test.ts"
+  },
+  "dependencies": {
+    "@inkibra/logger": "workspace:*",
+    "@inkibra/mailbox": "workspace:*",
+    "@inkibra/streams": "workspace:*",
+    "@inkibra/test-support": "workspace:*"
+  },
+  "devDependencies": {
+    "ioredis": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  }
+}

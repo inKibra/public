@@ -1,0 +1,22 @@
+{
+  "name": "@inkibra/environment",
+  "version": "1.1.0",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "Helps",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "SEE LICENSE",
+  "dependencies": {
+    "@pulumi/esc-sdk": "0.12.3"
+  },
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "name": "@inkibra/ai-construct",
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "A cognitive architecture for building AI agents with persistent memory, impulse-driven processing, and natural conversational cadence",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./styles.css": "./styled-system/styles.css",
+    "./cli/demo": "./cli/demo.tsx",
+    "./live": "./live/index.ts",
+    "./runtime/durable-runtime": "./runtime/durable-runtime.ts",
+    "./vfs/logs": "./vfs/logs.ts",
+    "./vfs/transcript": "./vfs/transcript.ts",
+    "./lab/create-lab-callbacks": "./lab/create-lab-callbacks.ts",
+    "./backend/routes": "./backend/routes.ts",
+    "./vfs/context-persistence": "./vfs/context-persistence.ts"
+  },
+  "inkibra": {
+    "build-pack": {
+      "type-macros": [
+        "./type-macros/index.type-macros.ts"
+      ]
+    }
+  },
+  "license": "SEE LICENSE",
+  "bin": {
+    "ai-construct": "./cli/demo.tsx"
+  },
+  "scripts": {
+    "prepare": "bun run panda:codegen",
+    "panda:codegen": "panda codegen && panda cssgen --outfile styled-system/styles.css",
+    "check:tsc": "tsc --noEmit",
+    "test": "bun run test:unit",
+    "test:unit": "bun test",
+    "test:integration": "node runtime/__tests__/integration/run-runtime-integration.mjs",
+    "test:chaos": "bun run test:chaos:smoke",
+    "test:chaos:smoke": "CHAOS_PROFILE=smoke node runtime/__tests__/integration/run-chaos-runtime.mjs",
+    "test:chaos:deep": "CHAOS_PROFILE=deep node runtime/__tests__/integration/run-chaos-runtime.mjs",
+    "demo": "bun run ./cli/demo.tsx",
+    "clean": "rm -rf build"
+  },
+  "dependencies": {
+    "@inkibra/actor": "workspace:*",
+    "@inkibra/ai-flow": "workspace:*",
+    "@inkibra/ai-sandbox-computer": "workspace:*",
+    "@inkibra/dal-connection": "workspace:*",
+    "@inkibra/fsm-utils": "workspace:*",
+    "@inkibra/logger": "workspace:*",
+    "@inkibra/mailbox": "workspace:*",
+    "@inkibra/observable-cache": "workspace:*",
+    "@inkibra/streams": "workspace:*",
+    "@inkibra/test-support": "workspace:*",
+    "@inkibra/workflow": "workspace:*",
+    "@opentui/core": "^0.1.77",
+    "@opentui/react": "^0.1.77",
+    "cron-parser": "^4.9.0",
+    "dotenv": "^17.2.3",
+    "ioredis": "catalog:",
+    "openai": "catalog:",
+    "react": "^19.0.0"
+  },
+  "peerDependencies": {
+    "@inkibra/router": "workspace:*",
+    "neverthrow": "catalog:",
+    "typia": "catalog:"
+  },
+  "devDependencies": {
+    "@happy-dom/global-registrator": "catalog:",
+    "@inkibra/build-pack": "workspace:*",
+    "@inkibra/denzel-bun": "workspace:*",
+    "@inkibra/router": "workspace:*",
+    "@pandacss/dev": "^1.8.2",
+    "@testing-library/react": "catalog:",
+    "@types/react": "^19.0.8",
+    "react-dom": "catalog:",
+    "testcontainers": "^11.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  }
+}

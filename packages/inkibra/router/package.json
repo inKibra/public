@@ -1,0 +1,53 @@
+{
+  "name": "@inkibra/router",
+  "version": "0.2.1",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "Type-safe routing with Result types, transport layer, and React integration",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "inkibra": {
+    "build-pack": {
+      "type-macros": [
+        "./type-macros/index.type-macros.ts"
+      ]
+    }
+  },
+  "exports": {
+    ".": "./index.ts",
+    "./react": "./react.ts",
+    "./hmr-client": "./lib/hmr-client.ts",
+    "./constants": "./constants/index.ts",
+    "./constants/*": "./constants/*.ts",
+    "./lib/*.tsx": "./lib/*.tsx",
+    "./lib/*": "./lib/*.ts",
+    "./schemas": "./schemas.js"
+  },
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build"
+  },
+  "dependencies": {
+    "@inkibra/logger": "workspace:*",
+    "@inkibra/observable-cache": "workspace:*",
+    "@inkibra/query-cache": "workspace:*"
+  },
+  "peerDependencies": {
+    "@opentui/react": "^0.1.77",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typia": "catalog:"
+  },
+  "devDependencies": {
+    "react-refresh": "catalog:",
+    "typia": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  }
+}

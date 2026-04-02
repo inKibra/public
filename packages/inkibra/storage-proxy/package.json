@@ -1,0 +1,24 @@
+{
+  "name": "@inkibra/storage-proxy",
+  "version": "4.0.9",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build"
+  },
+  "dependencies": {
+    "@inkibra/error-base": "workspace:*",
+    "@inkibra/logger": "workspace:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  },
+  "gitHead": "ba14c4f87b3f7fefe6a144cf0eee23fc4149c705"
+}

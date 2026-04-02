@@ -1,0 +1,28 @@
+{
+  "name": "@inkibra/blob-storage",
+  "version": "4.2.1",
+  "engines": {
+    "node": "v18.13.0"
+  },
+  "description": "The blob storage manager",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.14.0",
+    "@inkibra/api-base": "workspace:*",
+    "@inkibra/error-base": "workspace:*",
+    "@inkibra/logger": "workspace:*",
+    "@inkibra/observable-cache": "workspace:*",
+    "@inkibra/crypto-jwt-claim": "workspace:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  },
+  "gitHead": "512679e2dec1937829e98017e2acc44c3e8811cb"
+}

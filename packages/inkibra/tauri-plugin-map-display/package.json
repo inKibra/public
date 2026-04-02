@@ -1,0 +1,22 @@
+{
+  "name": "@inkibra/tauri-plugin-map-display",
+  "version": "0.2.5",
+  "author": "You",
+  "description": "",
+  "license": "MIT",
+  "type": "module",
+  "main": "./build/index.js",
+  "types": "./index.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "clean": "rm -rf build",
+    "prepublishOnly": "npm run clean && npx tsc"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inkibra/tauri-plugins.git"
+  }
+}

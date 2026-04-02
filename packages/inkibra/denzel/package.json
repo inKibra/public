@@ -1,0 +1,53 @@
+{
+  "name": "@inkibra/denzel",
+  "version": "4.4.2",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "",
+  "types": "./index.ts",
+  "main": "./index.ts",
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build"
+  },
+  "dependencies": {
+    "@inkibra/api-base": "workspace:*",
+    "@inkibra/crypto-jwt-claim": "workspace:*",
+    "@inkibra/error-base": "workspace:*",
+    "@inkibra/logger": "workspace:*",
+    "@inkibra/observable-cache": "workspace:*",
+    "@types/compression": "^1.7.2",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/multer": "^1.4.11",
+    "@types/yargs": "^15.0.4",
+    "@types/serve-favicon": "^2.5.3",
+    "@types/react": "catalog:",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "react": "catalog:",
+    "serve-favicon": "^2.5.0",
+    "neverthrow": "catalog:",
+    "@types/eventsource": "^3.0.0",
+    "eventsource": "^4.0.0"
+  },
+  "devDependencies": {
+    "typia": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  },
+  "gitHead": "512679e2dec1937829e98017e2acc44c3e8811cb",
+  "exports": {
+    ".": "./index.ts",
+    "./lib/*": "./lib/*.ts",
+    "./lib/static-on-client": "./lib/static-on-client.tsx"
+  }
+}

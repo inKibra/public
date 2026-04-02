@@ -1,0 +1,45 @@
+# Josh workspace: defines public repo structure
+# Overlay .public/ at root (README, LICENSE, package.json, Cargo.toml, configs)
+# Then include each public package directory
+# Excluded: recordless.*, deployments/, labs/, .github/, IDE configs
+
+:/.public
+
+packages/inkibra/actor = :/packages/inkibra/actor
+packages/inkibra/ai-construct = :/packages/inkibra/ai-construct
+packages/inkibra/ai-flow = :/packages/inkibra/ai-flow
+packages/inkibra/ai-sandbox-computer = :/packages/inkibra/ai-sandbox-computer
+packages/inkibra/api-base = :/packages/inkibra/api-base
+packages/inkibra/blob-storage = :/packages/inkibra/blob-storage
+packages/inkibra/build-pack = :/packages/inkibra/build-pack
+packages/inkibra/crypto-jwt-claim = :/packages/inkibra/crypto-jwt-claim
+packages/inkibra/dal-connection = :/packages/inkibra/dal-connection
+packages/inkibra/data-tool = :/packages/inkibra/data-tool
+packages/inkibra/denzel = :/packages/inkibra/denzel
+packages/inkibra/denzel-bun = :/packages/inkibra/denzel-bun
+packages/inkibra/denzel-cli = :/packages/inkibra/denzel-cli
+packages/inkibra/denzel-workers = :/packages/inkibra/denzel-workers
+packages/inkibra/environment = :/packages/inkibra/environment
+packages/inkibra/error-base = :/packages/inkibra/error-base
+packages/inkibra/example-web-app = :/packages/inkibra/example-web-app
+packages/inkibra/fsm-utils = :/packages/inkibra/fsm-utils
+packages/inkibra/logger = :/packages/inkibra/logger
+packages/inkibra/mailbox = :/packages/inkibra/mailbox
+packages/inkibra/observable-cache = :/packages/inkibra/observable-cache
+packages/inkibra/query-cache = :/packages/inkibra/query-cache
+packages/inkibra/router = :/packages/inkibra/router
+packages/inkibra/storage-proxy = :/packages/inkibra/storage-proxy
+packages/inkibra/storybook = :/packages/inkibra/storybook
+packages/inkibra/streams = :/packages/inkibra/streams
+packages/inkibra/tauri-plugin-auth = :/packages/inkibra/tauri-plugin-auth
+packages/inkibra/tauri-plugin-context-menu = :/packages/inkibra/tauri-plugin-context-menu
+packages/inkibra/tauri-plugin-example-app = :/packages/inkibra/tauri-plugin-example-app
+packages/inkibra/tauri-plugin-geolocation = :/packages/inkibra/tauri-plugin-geolocation
+packages/inkibra/tauri-plugin-haptic-feedback = :/packages/inkibra/tauri-plugin-haptic-feedback
+packages/inkibra/tauri-plugin-iap = :/packages/inkibra/tauri-plugin-iap
+packages/inkibra/tauri-plugin-map-display = :/packages/inkibra/tauri-plugin-map-display
+packages/inkibra/tauri-plugin-notifications = :/packages/inkibra/tauri-plugin-notifications
+packages/inkibra/tauri-plugin-ota = :/packages/inkibra/tauri-plugin-ota
+packages/inkibra/tauri-plugin-sharing = :/packages/inkibra/tauri-plugin-sharing
+packages/inkibra/test-support = :/packages/inkibra/test-support
+packages/inkibra/workflow = :/packages/inkibra/workflow

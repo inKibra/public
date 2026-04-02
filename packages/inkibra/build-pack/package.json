@@ -1,0 +1,52 @@
+{
+  "name": "@inkibra/build-pack",
+  "version": "0.4.0",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "Inkibra shared Bun build plugins (assets resolver, schema loader, etc)",
+  "license": "SEE LICENSE",
+  "types": "./index.ts",
+  "main": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./code-binding": "./code-binding.ts",
+    "./client-config": "./client-config.ts",
+    "./hmr": "./hmr/index.ts",
+    "./client-stub": "./client-stub.ts",
+    "./plugins/load-schemas-plugin": "./plugins/load-schemas-plugin.ts",
+    "./plugins/vanilla-extract-precompile": "./plugins/vanilla-extract-precompile.ts",
+    "./workers/asset-worker": "./workers/asset-worker/worker.ts",
+    "./workers/asset-worker/cli": "./workers/asset-worker/cli.ts",
+    "./workers/site-asset-worker/cli": "./workers/site-asset-worker/cli.ts"
+  },
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build",
+    "warm:typia-cache": "bun run warm-typia-cache.ts"
+  },
+  "dependencies": {
+    "@vanilla-extract/css": "catalog:",
+    "@vanilla-extract/integration": "catalog:",
+    "@vanilla-extract/recipes": "catalog:",
+    "@vanilla-extract/sprinkles": "catalog:",
+    "esbuild": "catalog:",
+    "eval": "^0.1.8",
+    "typescript": "catalog:",
+    "typia": "catalog:"
+  },
+  "peerDependencies": {
+    "@types/react": "catalog:",
+    "react": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@cloudflare/workers-types": "catalog:",
+    "@types/babel__core": "^7.20.5",
+    "react-refresh": "catalog:"
+  }
+}

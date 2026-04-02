@@ -1,0 +1,73 @@
+# Publish all public @inkibra packages to npm in dependency order
+# Uses OIDC trusted publishing — no npm token needed
+name: Publish to npm
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Update npm
+        run: npm install -g npm@latest && npm --version
+
+      - name: Verify OIDC environment
+        run: |
+          test -n "$ACTIONS_ID_TOKEN_REQUEST_URL" || (echo "Missing OIDC token URL" && exit 1)
+          test -n "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" || (echo "Missing OIDC token" && exit 1)
+          echo "OIDC environment confirmed"
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Type check
+        run: bun run check:tsc
+
+      - name: Resolve workspace deps and publish
+        run: |
+          set -euo pipefail
+
+          # Resolve workspace:* deps and get topo-sorted package list
+          PACKAGES=$(bun run scripts/publish-packages.ts)
+
+          PUBLISHED=0
+          SKIPPED=0
+          FAILED=0
+
+          echo "$PACKAGES" | while IFS=$'\t' read -r DIR NAME VERSION; do
+            echo "Publishing ${NAME}@${VERSION}..."
+            cd "$DIR"
+            if npm publish --provenance --access public 2>&1; then
+              echo "  Published"
+            else
+              EXIT_CODE=$?
+              # Check if it's already published (version conflict)
+              if npm view "${NAME}@${VERSION}" version >/dev/null 2>&1; then
+                echo "  Skipped (already published)"
+              else
+                echo "  Failed (exit code $EXIT_CODE)"
+              fi
+            fi
+            cd "$GITHUB_WORKSPACE"
+          done
+
+          echo "---"
+          echo "Done"

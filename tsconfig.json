@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "pretty": true,
+    "module": "ESNext",
+    "target": "ESNext",
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
+    "types": [
+      "bun",
+    ],
+    "incremental": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "verbatimModuleSyntax": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}

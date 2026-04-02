@@ -1,0 +1,102 @@
+diff --git a/dist/vanilla-extract-integration.cjs.dev.js b/dist/vanilla-extract-integration.cjs.dev.js
+index 6aa45f40cb8b4531901c2cddb5fddc16208b5742..8b3fbd5aa48d166f4b189b2c0688a30ea4831a53 100644
+--- a/dist/vanilla-extract-integration.cjs.dev.js
++++ b/dist/vanilla-extract-integration.cjs.dev.js
+@@ -139,13 +139,24 @@ async function processVanillaFile({
+   // To get around this we set the NODE_ENV back to the original value ONLY during eval
+   process.env.NODE_ENV = originalNodeEnv;
+   const adapterBoundSource = `
+-    require('@vanilla-extract/css/adapter').setAdapter(__adapter__);
+-    ${source}
++    __vanilla_css_adapter__.setAdapter(__adapter__);
++    ${source
++      .replace(/require\(['"]@vanilla-extract\/css\/fileScope['"]\)/g, '__vanilla_css_filescope__')
++      .replace(/require\(['"]@vanilla-extract\/css\/adapter['"]\)/g, '__vanilla_css_adapter__')
++      .replace(/require\(['"]@vanilla-extract\/css['"]\)/g, '__vanilla_css__')
++      .replace(/require\(['"]@vanilla-extract\/recipes['"]\)/g, '__vanilla_recipes__')
++      .replace(/require\(['"]@vanilla-extract\/sprinkles['"]\)/g, '__vanilla_sprinkles__')
++    }
+   `;
+   const evalResult = evalCode__default["default"](adapterBoundSource, filePath, {
+     console,
+     process,
+-    __adapter__: cssAdapter
++    __adapter__: cssAdapter,
++    __vanilla_css_adapter__: require('@vanilla-extract/css/adapter'),
++    __vanilla_css_filescope__: require('@vanilla-extract/css/fileScope'),
++    __vanilla_css__: require('@vanilla-extract/css'),
++    __vanilla_recipes__: require('@vanilla-extract/recipes'),
++    __vanilla_sprinkles__: require('@vanilla-extract/sprinkles')
+   }, true);
+   process.env.NODE_ENV = currentNodeEnv;
+   const cssImports = [];
+@@ -178,14 +189,16 @@ async function processVanillaFile({
+ 
+   // We run this code inside eval as jest seems to create a difrerent instance of the adapter file
+   // for requires executed within the eval and all CSS can be lost.
+-  evalCode__default["default"](`const { removeAdapter } = require('@vanilla-extract/css/adapter');
++  evalCode__default["default"](`const __ve_adapter__ = typeof __vanilla_css_adapter__ !== 'undefined' && __vanilla_css_adapter__ || require('@vanilla-extract/css/adapter');
++    const removeAdapter = __ve_adapter__ && __ve_adapter__.removeAdapter;
+     // Backwards compat with older versions of @vanilla-extract/css
+     if (removeAdapter) {
+       removeAdapter();
+     }
+   `, filePath, {
+     console,
+-    process
++    process,
++    __vanilla_css_adapter__: require('@vanilla-extract/css/adapter')
+   }, true);
+   const unusedCompositions = composedClassLists.filter(({
+     identifier
+diff --git a/dist/vanilla-extract-integration.cjs.prod.js b/dist/vanilla-extract-integration.cjs.prod.js
+index bb4cda3ab12dd8e5143d1aa25b7fe03afcec9545..61e8c728b9e656be9d2e23760cc3b80b38462f0b 100644
+--- a/dist/vanilla-extract-integration.cjs.prod.js
++++ b/dist/vanilla-extract-integration.cjs.prod.js
+@@ -139,13 +139,24 @@ async function processVanillaFile({
+   // To get around this we set the NODE_ENV back to the original value ONLY during eval
+   process.env.NODE_ENV = originalNodeEnv;
+   const adapterBoundSource = `
+-    require('@vanilla-extract/css/adapter').setAdapter(__adapter__);
+-    ${source}
++    __vanilla_css_adapter__.setAdapter(__adapter__);
++    ${source
++      .replace(/require\(['"]@vanilla-extract\/css\/fileScope['"]\)/g, '__vanilla_css_filescope__')
++      .replace(/require\(['"]@vanilla-extract\/css\/adapter['"]\)/g, '__vanilla_css_adapter__')
++      .replace(/require\(['"]@vanilla-extract\/css['"]\)/g, '__vanilla_css__')
++      .replace(/require\(['"]@vanilla-extract\/recipes['"]\)/g, '__vanilla_recipes__')
++      .replace(/require\(['"]@vanilla-extract\/sprinkles['"]\)/g, '__vanilla_sprinkles__')
++    }
+   `;
+   const evalResult = evalCode__default["default"](adapterBoundSource, filePath, {
+     console,
+     process,
+-    __adapter__: cssAdapter
++    __adapter__: cssAdapter,
++    __vanilla_css_adapter__: require('@vanilla-extract/css/adapter'),
++    __vanilla_css_filescope__: require('@vanilla-extract/css/fileScope'),
++    __vanilla_css__: require('@vanilla-extract/css'),
++    __vanilla_recipes__: require('@vanilla-extract/recipes'),
++    __vanilla_sprinkles__: require('@vanilla-extract/sprinkles')
+   }, true);
+   process.env.NODE_ENV = currentNodeEnv;
+   const cssImports = [];
+@@ -178,14 +189,16 @@ async function processVanillaFile({
+ 
+   // We run this code inside eval as jest seems to create a difrerent instance of the adapter file
+   // for requires executed within the eval and all CSS can be lost.
+-  evalCode__default["default"](`const { removeAdapter } = require('@vanilla-extract/css/adapter');
++  evalCode__default["default"](`const __ve_adapter__ = typeof __vanilla_css_adapter__ !== 'undefined' && __vanilla_css_adapter__ || require('@vanilla-extract/css/adapter');
++    const removeAdapter = __ve_adapter__ && __ve_adapter__.removeAdapter;
+     // Backwards compat with older versions of @vanilla-extract/css
+     if (removeAdapter) {
+       removeAdapter();
+     }
+   `, filePath, {
+     console,
+-    process
++    process,
++    __vanilla_css_adapter__: require('@vanilla-extract/css/adapter')
+   }, true);
+   const unusedCompositions = composedClassLists.filter(({
+     identifier

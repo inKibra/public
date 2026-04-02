@@ -1,0 +1,1 @@
+export { stub } from './stub';

@@ -1,0 +1,45 @@
+{
+  "name": "@inkibra/api-base",
+  "version": "5.1.0",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "The api-base",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./constants": "./constants/index.ts",
+    "./constants/*": "./constants/*.ts",
+    "./schemas": "./schemas.js",
+    "./classes/*": "./classes/*.ts",
+    "./constants/remote-binary-locator": "./constants/remote-binary-locator.ts",
+    "./constants/mime-type": "./constants/mime-type.ts"
+  },
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build",
+    "generate:schemas": "bun run ../build-pack/generate-schemas.ts"
+  },
+  "dependencies": {
+    "@inkibra/error-base": "workspace:*",
+    "@inkibra/logger": "workspace:*",
+    "@inkibra/observable-cache": "workspace:*",
+    "@types/node-fetch": "^2.5.0",
+    "internal-storage": "^0.1.2"
+  },
+  "peerDependencies": {
+    "@types/react": "catalog:",
+    "neverthrow": "catalog:",
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "typia": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  },
+  "gitHead": "512679e2dec1937829e98017e2acc44c3e8811cb"
+}

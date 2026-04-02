@@ -1,0 +1,27 @@
+{
+  "name": "@inkibra/logger",
+  "version": "4.0.7",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "The logger factory",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build"
+  },
+  "dependencies": {
+    "@inkibra/environment": "workspace:*",
+    "pino": "^9.5.0"
+  },
+  "devDependencies": {
+    "pino-pretty": "^13.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  },
+  "gitHead": "ba14c4f87b3f7fefe6a144cf0eee23fc4149c705"
+}

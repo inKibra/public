@@ -1,0 +1,32 @@
+{
+  "name": "@inkibra/denzel-bun",
+  "version": "0.1.1",
+  "description": "Bun-native HTTP server for @inkibra/router with context codec providers",
+  "main": "index.ts",
+  "types": "index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./react": "./react/index.ts",
+    "./hmr": "./lib/hmr/index.ts"
+  },
+  "scripts": {
+    "check:tsc": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@inkibra/build-pack": "workspace:*",
+    "@inkibra/crypto-jwt-claim": "workspace:*",
+    "@inkibra/router": "workspace:*",
+    "@inkibra/logger": "workspace:*",
+    "@inkibra/test-support": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "ioredis": "catalog:",
+    "typia": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  }
+}

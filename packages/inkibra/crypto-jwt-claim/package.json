@@ -1,0 +1,28 @@
+{
+  "name": "@inkibra/crypto-jwt-claim",
+  "version": "4.0.17",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "Library for signing and parsing jwt claims",
+  "main": "./build/index.js",
+  "types": "./index.ts",
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build",
+    "generate-secret": "bun ./generate-secret.ts"
+  },
+  "dependencies": {
+    "@inkibra/api-base": "workspace:*",
+    "@inkibra/error-base": "workspace:*",
+    "@types/jsonwebtoken": "^8.3.3",
+    "jsonwebtoken": "^8.5.1",
+    "uuid": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  },
+  "gitHead": "512679e2dec1937829e98017e2acc44c3e8811cb"
+}

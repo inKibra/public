@@ -1,0 +1,42 @@
+{
+  "name": "@inkibra/ai-flow",
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "Streaming-first AI workflow orchestration framework with code mode execution",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "inkibra": {
+    "build-pack": {
+      "type-macros": [
+        "./type-macros/index.type-macros.ts"
+      ]
+    }
+  },
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "test": "bun test",
+    "clean": "rm -rf build"
+  },
+  "dependencies": {
+    "@inkibra/logger": "workspace:*",
+    "@inkibra/test-support": "workspace:*",
+    "@dqbd/tiktoken": "^1.0.8",
+    "cron-parser": "^4.9.0",
+    "gray-matter": "catalog:",
+    "memfs": "^4.51.1",
+    "openai": "catalog:",
+    "typia": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "neverthrow": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  }
+}

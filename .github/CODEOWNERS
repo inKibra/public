@@ -1,0 +1,5 @@
+# Protect workflow files from unauthorized changes
+# Any PR touching these paths requires review from maintainers
+/.github/ @bradleat
+/.github/workflows/ @bradleat
+/.github/CODEOWNERS @bradleat

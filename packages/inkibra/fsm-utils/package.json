@@ -1,0 +1,34 @@
+{
+  "name": "@inkibra/fsm-utils",
+  "version": "0.2.0",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "Utilities for creating instructions and views around data that can be safely treated like a finite state machine",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build",
+    "test": "bun test"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "@inkibra/error-base": "workspace:*",
+    "neverthrow": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/inkibra/public/issues"
+  },
+  "homepage": "https://github.com/inkibra/public#readme"
+}

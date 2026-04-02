@@ -1,0 +1,21 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "enables the default permissions",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default",
+    "ota:default",
+    "sharing:default",
+    "log:default",
+    "context-menu:default",
+    "map-display:default",
+    "haptic-feedback:default",
+    "geolocation:default",
+    "iap:default",
+    "auth:default",
+    "notifications:default"
+  ]
+}

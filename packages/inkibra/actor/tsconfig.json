@@ -1,0 +1,21 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "build",
+    "paths": {
+      "@inkibra/logger": [
+        "../logger/index.ts"
+      ],
+      "@inkibra/mailbox": [
+        "../mailbox/index.ts"
+      ],
+      "@inkibra/streams": [
+        "../streams/index.ts"
+      ],
+      "@inkibra/streams/memory": [
+        "../streams/memory.ts"
+      ]
+    }
+  },
+  "include": ["./**/*.ts"]
+}

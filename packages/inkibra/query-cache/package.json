@@ -1,0 +1,26 @@
+{
+  "name": "@inkibra/query-cache",
+  "version": "0.1.1",
+  "engines": {
+    "bun": "v1.3.0"
+  },
+  "description": "Query cache with DSL support, staleness tracking, and SSR hydration",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "license": "SEE LICENSE",
+  "scripts": {
+    "check:tsc": "tsc --noEmit",
+    "clean": "rm -rf build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typia": "catalog:"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkibra/public.git"
+  }
+}

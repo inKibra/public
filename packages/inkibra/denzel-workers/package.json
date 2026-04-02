@@ -1,0 +1,23 @@
+{
+  "name": "@inkibra/denzel-workers",
+  "version": "0.3.1",
+  "description": "Cloudflare Workers for denzel deployment system",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "build": "bun run build:tsc",
+    "build:tsc": "bun check:tsc",
+    "check:tsc": "tsc --noEmit",
+    "dev": "bun run build:tsc --watch"
+  },
+  "dependencies": {
+    "@cloudflare/workers-types": "catalog:",
+    "@inkibra/api-base": "workspace:*",
+    "@inkibra/observable-cache": "workspace:*"
+  },
+  "files": [
+    "workers/**/*",
+    "index.ts",
+    "tsconfig.json"
+  ]
+}
